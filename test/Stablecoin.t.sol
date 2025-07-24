@@ -263,6 +263,17 @@ contract StablecoinTest is Test {
         vm.stopPrank();
     }
 
+    function test_UnsupportedRenounceOwnership() public {
+        vm.prank(owner);
+        vm.expectRevert("Unsupported");
+        token.renounceOwnership();
+    }
+
+    function test_UnsupportedRenounceOwnershipInvalidCaller() public {
+        vm.expectRevert("Ownable: caller is not the owner");
+        token.renounceOwnership();
+    }
+
     function test_IncreaseAllowance() public {
         vm.prank(owner);
         token.increaseAllowance(spender, 1e18);
