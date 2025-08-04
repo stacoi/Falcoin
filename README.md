@@ -33,6 +33,19 @@ export RPC=
 export PK=
 export ETHERSCAN_API_KEY=
 
-forge script script/DeployStablecoin.s.sol:DeployStablecoinScript --rpc-url $RPC --private-key $PK --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv
+forge script script/DeployStablecoin.s.sol:DeployStablecoinScript --rpc-url $RPC_URL --private-key $PK --broadcast --verify --etherscan-api-key $ETHERSCAN_API_KEY -vvvv
 ```
 
+Note that some RPCs might have rate limits so concurrent deployments might be rejected. If so, run the script line by line.
+
+## Verify
+
+If the contract is deployed without verification or if the deployed chain is not supported by `forge`, verification could be done independently:
+
+```sh
+export ETHERSCAN_API_KEY=
+
+forge verify-contract --chain-id 12345 --compiler-version 0.8.14+commit.80d49f37 0x1234 src/Stablecoin.sol:Stablecoin --verifier-url https://api.explorer.com/api
+```
+
+Note that the `chain-id` and explorer's `verifier-url` is required.
